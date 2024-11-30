@@ -25,7 +25,12 @@ export default function Home() {
     //saveImage 
     const formdata = new FormData();
     formdata.append("Image", files)
-    const res = await axios.post('api/upload', formdata)
+    const res = await axios.post('api/upload', formdata, {
+      headers: {
+        "Content-Type": 'multipart/form-data'
+      }
+    })
+
     console.log("Formdata :", formdata, res)
   }
   //handle input change
