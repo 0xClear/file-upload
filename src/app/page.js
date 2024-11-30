@@ -20,11 +20,12 @@ export default function Home() {
     console.log("data", res)
   }
 
-  //save imvqa
+  //save image
   const saveImage= async(eve)=>{
     //saveImage 
     const formdata = new FormData();
-    formdata.append("Image", files)
+    formdata.append("image", files)
+    formdata.append('name', "UV")
     const res = await axios.post('api/upload', formdata, {
       headers: {
         "Content-Type": 'multipart/form-data'
@@ -33,6 +34,8 @@ export default function Home() {
 
     console.log("Formdata :", formdata, res)
   }
+
+  //TODO upload image using multer 
   //handle input change
   const handleChange=(eve)=>{
     const file= eve.target.files[0]
