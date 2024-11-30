@@ -21,8 +21,12 @@ export default function Home() {
   }
 
   //save imvqa
-  const saveImage=(eve)=>{
-    console.log(eve.target.value)
+  const saveImage= async(eve)=>{
+    //saveImage 
+    const formdata = new FormData();
+    formdata.append("Image", files)
+    const res = await axios.post('api/upload', formdata)
+    console.log("Formdata :", formdata, res)
   }
   //handle input change
   const handleChange=(eve)=>{
