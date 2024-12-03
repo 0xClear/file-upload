@@ -46,6 +46,7 @@ export default function Home() {
   //image state 
   const [images, setImages] = useState('');
   const [files, setfile] = useState(); 
+  const [fileInfo, setFileInfo] = useState(null);
 
   // const getName= async()=>{
   //   const res = await axios.post('api/auth')
@@ -77,18 +78,27 @@ export default function Home() {
   //TODO upload image using multer 
   //handle input change
   const handleChange=(eve)=>{
-    const file= eve.target.files[0]
-    setfile(files)
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = ()=>{
-      setImages(reader.result)
+    const selectedfile= eve.target.files[0]
+    if(selectedfile){
+      setfile(selectedfile) //store file in state 
+
+
+      //extract dataInformation 
+      const name = selectedfile.name;
+      const type = selectedfile.type;
+      const size = selectedfile.size;
+      setFileInfo({name, type, size}) 
+
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedfile);
+      reader.onload = ()=>{
+        setImages(reader.result)
+      }
+      reader.onerror = ()=>{
+        console.log("failure ")
+      }
+      console.log("uploaded file ", selectedfile)
     }
-    reader.onerror = ()=>{
-      console.log("failure ")
-    }
-    file
-    console.log("uploaded file ",)
 
   }
   return (<div className="container pt-4">
@@ -101,7 +111,10 @@ export default function Home() {
     <div>
       <div>
         <input  type="file" onChange={handleChange}/>
-        <img src={images} width={100} height={100} />
+        <div className=" flex justify-end">
+
+        <img src={images} width={200} height={200} alt="Profile" />
+        </div>
       </div>
       <button onClick={saveImage} >Save Image</button>
     </div>
