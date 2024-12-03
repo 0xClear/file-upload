@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .bg-main{
   background-color: #e5e5f7;
   opacity: 0.8;
