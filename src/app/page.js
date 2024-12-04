@@ -1,8 +1,12 @@
 "use client"
-import Image from "next/image";
 import styles from "./page.module.css";
 import axios from "axios";
 import { useState } from "react";
+import Modal from "@/component/Modal/Modal";
+import { IonIcon } from '@ionic/react';
+import { fileTrayOutline, paperPlaneOutline  } from 'ionicons/icons';  // Correct icon name
+import Image from "next/image";
+
 
 //table function 
 const Table=({theader, data, columns})=>{
@@ -53,6 +57,7 @@ export default function Home() {
   //   setResult(res?.data?.name)
   // }
   const [users, setUsers] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const getInfo= async()=>{
     const res = await axios.get('api/auth')
@@ -113,22 +118,38 @@ export default function Home() {
         <input  type="file" onChange={handleChange}/>
         <div className=" flex justify-end">
 
-        <img src={images} width={200} height={200} alt="Profile" />
+          <img src={images} width={200} height={200} alt="Profile" />
+          {fileInfo &&  <div className="p-2 border bg-slate-300" >
+            <p>{fileInfo.name}</p>
+            <p>{fileInfo.type}</p>
+            <p>{fileInfo.size}</p>
+          </div>}
         </div>
       </div>
-      <button onClick={saveImage} >Save Image</button>
+      <button onClick={saveImage} className="btn btn-primary" >Save Image</button>
+      <button className="btn btn-outline-success m-3"onClick={()=>setOpen(true)}>
+            <IonIcon icon={fileTrayOutline} color="dark" size="100"/> Contact
+      </button>
     </div>
 
+    <Modal open={open} onClose={() => setOpen(false)}>
+        <div className="text-center w-96">
+          <Image src="/images/select.svg" alt="my icon" width={150} height={150} className="mx-auto" />
+          <div className="mx-auto my-4 w-48">
+            <h3 className="text-lg font-black text-gray-800">Modal Heading</h3>
+          </div>
+          <div className="flex gap-4">
+            <button className="btn btn-outline-success w-32 text-center mx-auto">Send</button>
+          </div>
+        </div>
 
-    {/*
-    
-    **
-    user Info 
-    */}
-      <Table
+    </Modal>
+  
+
+      <Table className="table"
         theader={["Name", "Role", "Location", "Hash ID"]}
         data={users} // Assuming 'users' is an array of user objects
-        columns={["name", "role", "location", "hashId"]} // Specify the column names based on the data structure
+        columns={["name", "rno", "loc", "_id"]} // Specify the column names based on the data structure
       />
   </div>
   );
