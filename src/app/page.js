@@ -131,19 +131,20 @@ export default function Home() {
             <IonIcon icon={fileTrayOutline} color="dark" size="100"/> Contact
       </button>
     </div>
-
-    <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="text-center w-96">
-          <Image src="/images/select.svg" alt="my icon" width={150} height={150} className="mx-auto" />
-          <div className="mx-auto my-4 w-48">
-            <h3 className="text-lg font-black text-gray-800">Kontaktieren</h3>
+    {open && (
+      <Modal open={open} onClose={() => setOpen(false)}>
+          <div className="text-center w-96">
+            <Image src="/images/select.svg" alt="my icon" width={0} height={0} className="mx-auto w-1/4 md:w-1/3 lg:w-1/2 h-auto" />
+            <div className="mx-auto my-4 w-48">
+              <h3 className="text-lg font-black text-gray-800">Kontaktieren</h3>
+            </div>
+            {/** contact formular component */}
+            <div className="my-4">
+              <ContactForm/>
+            </div>
           </div>
-          {/** contact formular component */}
-          <div className="my-4">
-            <ContactForm/>
-          </div>
-        </div>
-    </Modal>
+      </Modal>
+    )}
   
 
       <Table className="table"

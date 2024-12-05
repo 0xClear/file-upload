@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IonIcon } from '@ionic/react';
 import { addOutline } from 'ionicons/icons';
 
 const Modal = ({ open, onClose, children }) => {
+  const [isClient, setIsClient]=useState(false);
+  useEffect(() => {
+    setIsClient(true); // Setzt den Client-Zustand auf `true`, sobald der Client geladen ist
+  }, []);
+  if (!isClient) {
+    return null; // Verhindert, dass das Modal auf der Server-Seite gerendert wird
+  }
   return (
     <div>
       {/* Modal Background Overlay */}
