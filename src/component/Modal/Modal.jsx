@@ -8,7 +8,7 @@ const Modal = ({ open, onClose, children }) => {
       {/* Modal Background Overlay */}
       <div
         onClick={onClose}
-        className={`fixed inset-0 flex justify-center items-center transition-colors ${open ? 'visible bg-black/50' : 'invisible pointer-events-none'}`}
+        className={`fixed inset-0 flex justify-center items-center transition-colors ${open ? 'visible  backdrop-blur-sm' : 'invisible pointer-events-none'}`}
         style={{
           zIndex: 999,  // Ensure overlay is above other content
         }}
@@ -16,7 +16,7 @@ const Modal = ({ open, onClose, children }) => {
         {/* Modal Content */}
         <div
           onClick={(e) => e.stopPropagation()} // Prevent clicking inside modal from closing it
-          className={`bg-white rounded-xl shadow p-6 transition-all transform ${open ? 'scale-100 opacity-100' : 'scale-125 opacity-0'}`}
+          className={`bg-[#d7dbe4] rounded-xl  shadow p-6 transition-all transform ${open ? 'scale-100 opacity-100' : 'scale-125 opacity-0'}`}
           style={{
             zIndex: 1000,  // Ensure modal content is above overlay
           }}

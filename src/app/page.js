@@ -6,7 +6,7 @@ import Modal from "@/component/Modal/Modal";
 import { IonIcon } from '@ionic/react';
 import { fileTrayOutline, paperPlaneOutline  } from 'ionicons/icons';  // Correct icon name
 import Image from "next/image";
-
+import ContactForm from "@/component/ContactForm/ContactForm";
 
 //table function 
 const Table=({theader, data, columns})=>{
@@ -136,13 +136,13 @@ export default function Home() {
         <div className="text-center w-96">
           <Image src="/images/select.svg" alt="my icon" width={150} height={150} className="mx-auto" />
           <div className="mx-auto my-4 w-48">
-            <h3 className="text-lg font-black text-gray-800">Modal Heading</h3>
+            <h3 className="text-lg font-black text-gray-800">Kontaktieren</h3>
           </div>
-          <div className="flex gap-4">
-            <button className="btn btn-outline-success w-32 text-center mx-auto">Send</button>
+          {/** contact formular component */}
+          <div className="my-4">
+            <ContactForm/>
           </div>
         </div>
-
     </Modal>
   
 
