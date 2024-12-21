@@ -8,6 +8,8 @@ import { fileTrayOutline, paperPlaneOutline  } from 'ionicons/icons';  // Correc
 import Image from "next/image";
 import ContactForm from "@/component/ContactForm/ContactForm";
 
+
+
 //table function 
 const Table=({theader, data, columns})=>{
   //const {theader, data, columns}= props
@@ -49,16 +51,10 @@ const Table=({theader, data, columns})=>{
 export default function Home() {
   //image state 
   const [images, setImages] = useState('');
-  const [files, setfile] = useState(); 
+  const [files, setfile] = useState(null); 
   const [fileInfo, setFileInfo] = useState(null);
-
-  // const getName= async()=>{
-  //   const res = await axios.post('api/auth')
-  //   setResult(res?.data?.name)
-  // }
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
-
   const getInfo= async()=>{
     const res = await axios.get('api/auth')
     setUsers(res?.data)
@@ -66,28 +62,39 @@ export default function Home() {
   }
 
   //save image
-  const saveImage= async(eve)=>{
+  const saveImage= async()=>{
+    if(!files) return;
     //saveImage 
     const formdata = new FormData();
     formdata.append("image", files)
     formdata.append('name', "UV")
-    const res = await axios.post('api/upload', formdata, {
-      headers: {
-        "Content-Type": 'multipart/form-data'
-      }
-    })
-
-    console.log("Formdata :", formdata, res)
-  }
+    try{
+      const res = await axios.post('/api/upload', formdata, {
+        headers: {
+          "Content-Type": 'multipart/form-data'
+        }
+      })
+      
+      console.log("response . ", res?.data)
+    }catch(errrr){
+      console.error('Error uploading Image', errrr)
+    }
+  };
 
   //TODO upload image using multer 
   //handle input change
   const handleChange=(eve)=>{
     const selectedfile= eve.target.files[0]
+
     if(selectedfile){
       setfile(selectedfile) //store file in state 
 
-
+      // Überprüfen, ob der Dateityp erlaubt ist
+      const allowedTypes = ['image/jpeg', 'image/png'];
+      if (!allowedTypes.includes(selectedfile.type)) {
+        alert("Please upload a valid image (JPEG or PNG).");
+        return;
+      }
       //extract dataInformation 
       const name = selectedfile.name;
       const type = selectedfile.type;
