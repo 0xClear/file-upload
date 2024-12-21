@@ -62,22 +62,30 @@ export default function Home() {
   }
 
   //save image
-  const saveImage= async()=>{
-    if(!files) return;
-    //saveImage 
-    const formdata = new FormData();
-    formdata.append("image", files)
-    formdata.append('name', "UV")
-    try{
-      const res = await axios.post('/api/upload', formdata, {
+  const uploadImage= async()=>{
+    if (!files) {
+      console.error('Kein Bild ausgewählt');
+      return;
+    }
+
+    // FormData erstellen
+    const formData = new FormData();
+    formData.append('image', files);  // Bild anhängen
+    formData.append('name', "UV");    // Name anhängen (oder den Namen dynamisch setzen)
+
+    try {
+      const res = await axios.post('/api/upload', formData, {
         headers: {
-          "Content-Type": 'multipart/form-data'
-        }
-      })
-      
-      console.log("response . ", res?.data)
-    }catch(errrr){
-      console.error('Error uploading Image', errrr)
+          "Content-Type": 'multipart/form-data',
+        },
+      });
+
+      // Wenn das Bild erfolgreich hochgeladen wurde, zeige die Antwort an
+      console.log("Bild hochgeladen: ", res?.data);
+      setImages(res?.data);  // Aktualisiere den `images` Zustand mit der Antwort von der API
+
+    } catch (error) {
+      console.error('Fehler beim Hochladen des Bildes', error);
     }
   };
 
@@ -133,7 +141,7 @@ export default function Home() {
           </div>}
         </div>
       </div>
-      <button onClick={saveImage} className="btn btn-primary" >Save Image</button>
+      <button onClick={uploadImage} className="btn btn-primary" >Save Image</button>
       <button className="btn btn-outline-success m-3"onClick={()=>setOpen(true)}>
             <IonIcon icon={fileTrayOutline} color="dark" size="100"/> Contact
       </button>
@@ -154,7 +162,7 @@ export default function Home() {
     )}
   
 
-      <Table className="table"
+      <Table className="table "
         theader={["Name", "Role", "Location", "Hash ID"]}
         data={users} // Assuming 'users' is an array of user objects
         columns={["name", "rno", "loc", "_id"]} // Specify the column names based on the data structure
