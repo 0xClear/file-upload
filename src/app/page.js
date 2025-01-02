@@ -132,8 +132,9 @@ export default function Home() {
       <div>
         <input  type="file" onChange={handleChange}/>
         <div className=" flex justify-end">
-
-          <img src={images} width={200} height={200} alt="Profile" />
+          {images && 
+          <img className=" border-gray-1" src={images} width={200} height={200} alt="Profile" />
+        }
           {fileInfo &&  <div className="p-2 border bg-slate-300" >
             <p>{fileInfo.name}</p>
             <p>{fileInfo.type}</p>
